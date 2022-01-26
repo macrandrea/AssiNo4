@@ -1,4 +1,3 @@
-clc,clear
 maxit=1000;
 tol=1e-8;
 x0=[-1,3,3,0]';
@@ -13,13 +12,13 @@ r=zeros(maxit,4);
 p=r;
 alpha=zeros(maxit+1);
 beta=alpha;
-r(1,:)=b-A*x0;
+r(1,:)=b+A*x0;
 p(1,:)=r(1,:);
 Ef=mat;
 for i=1:(maxit+1)
     alpha(i)=(norm(r(i,:))^2)/(p(i,:)*A*p(i,:)');
-    mat(i+1,:)=mat(i,:)+alpha(i)*p(i,:);
-    r(i+1,:)=b-A*mat(i+1,:)';
+    mat(i+1,:)=mat(i,:)-alpha(i)*p(i,:);
+    r(i+1,:)=b+A*mat(i+1,:)';
     beta(i)=norm(r(i+1,:))^2/norm(r(i,:))^2;
     p(i+1,:)=r(i+1,:)+beta(i)*p(i,:);
     %Ef(i)=b'*mat(i,:)'+0.5*mat(i,:)*A*mat(i,:)';%b'*mat(i,:)+0.5*mat(i,:)*A*mat(i,:)';
