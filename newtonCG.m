@@ -1,5 +1,6 @@
 clc,clear
 maxit=10;
+tol=1e-8;
 x0=[-1,3,3,0]';
 b=[5.04, -59.4, 146.4, -96.6]';
 A=[ 0.16  , -1.2 , 2.4 , -1.4;
@@ -20,4 +21,7 @@ for i=1:(maxit+1)
     r(i+1,:)=b-A*mat(i+1,:)';
     beta(i)=norm(r(i+1,:))^2/norm(r(i,:))^2;
     p(i+1,:)=r(i+1,:)+beta(i)*p(i,:);
+    if (norm(mat(i+1,:)-mat(i,:))<tol*(1+norm(mat(i+1,:))))
+        break;
+    end
 end
